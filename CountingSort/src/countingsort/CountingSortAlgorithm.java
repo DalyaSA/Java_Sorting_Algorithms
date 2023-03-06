@@ -13,11 +13,11 @@ public class CountingSortAlgorithm {
     public void sort(int arr[])
     {
         // Find the maximum and minimum element from the array
-        int max = Arrays.stream(arr).max().getAsInt();
-        int min = Arrays.stream(arr).min().getAsInt();
+        int min = Arrays.stream(arr).min().orElse(0);
+        int max = Arrays.stream(arr).max().orElse(Integer.MAX_VALUE);
 
-        int range = max - min + 1;
-        int count[] = new int[range];
+
+        int count[] = new int[max - min + 1];
 
         for (int i = 0; i < arr.length; i++) {
             count[arr[i] - min]++;
