@@ -1,10 +1,11 @@
 package countingsort;
 
+import java.util.Arrays;
 public class Main {
 
     // Driver method to test above
     public static void main(String args[]) throws InterruptedException {
-        // int[] arr = new int[400000]; //sorting 400000 random integers
+        //int[] arr = new int[400000]; //sorting 400000 random integers
         int [] arr = new int[Integer.parseInt(args[0])];
         double start;
         double end;

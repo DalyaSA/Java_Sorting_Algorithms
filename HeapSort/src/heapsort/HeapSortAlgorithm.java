@@ -5,9 +5,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.lang.management.ManagementFactory;
-import java.util.concurrent.ThreadLocalRandom;
+import java.util.Random;
 
 public class HeapSortAlgorithm {
+    private Random random;
     OperatingSystemMXBean operatingSystemMXBean = (OperatingSystemMXBean) ManagementFactory.getOperatingSystemMXBean();
     public void sort(int arr[])
     {
@@ -56,9 +57,10 @@ public class HeapSortAlgorithm {
         }
     }
     public void CreateRandoms(int arr[]){
+        random = new Random(200);
         for (int i = 0; i < arr.length; i++) {
-            // Add random integers in an array
-            arr[i] = ThreadLocalRandom.current().nextInt(-1000000,100000);
+            // Add 400000 random integers to an array
+            arr[i] = random.nextInt(-1000000,1000000);
         }
     }
 
