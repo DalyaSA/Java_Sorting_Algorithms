@@ -34,7 +34,7 @@ public class InsertionSortAlgorithm {
         random = new Random(200);
         for (int i = 0; i < arr.length; i++) {
             // Add 400000 random integers to an array
-            arr[i] = random.nextInt(-1000000,1000000);
+            arr[i] = random.nextInt(2000001) - 1000000;
         }
     }
 
