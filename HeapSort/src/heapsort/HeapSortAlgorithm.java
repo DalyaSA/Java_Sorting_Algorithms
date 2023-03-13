@@ -32,8 +32,7 @@ public class HeapSortAlgorithm {
 
     // To heapify a subtree rooted with node i which is
     // an index in arr[]. n is size of heap
-    public void heapify(int arr[], int N, int i)
-    {
+    public void heapify(int arr[], int N, int i) {
         int largest = i; // Initialize largest as root
         int l = 2 * i + 1; // left = 2*i + 1
         int r = 2 * i + 2; // right = 2*i + 2
@@ -64,16 +63,25 @@ public class HeapSortAlgorithm {
         }
     }
 
-
     public double estimatedTotalTime(double start, double end) {
 
         return end - start;
     }
-    public double getUsedCPU() {
-        return operatingSystemMXBean.getProcessCpuLoad();
+
+    public int getusedCPU(long cpuStartTime, long elapsedStartTime, int cpuCount){
+            long end = System.nanoTime();
+            long totalAvailCPUTime = cpuCount * (end-elapsedStartTime);
+            long totalUsedCPUTime = ManagementFactory.getThreadMXBean().getCurrentThreadCpuTime()-cpuStartTime;
+            //log("Total CPU Time:" + totalUsedCPUTime + " ns.");
+            //log("Total Avail CPU Time:" + totalAvailCPUTime + " ns.");
+            float per = ((float)totalUsedCPUTime*100)/(float)totalAvailCPUTime;
+            return (int)per;
+
     }
+
     public double getUsedMemory(long mem0, long mem1) {
-        return (mem1 - mem0)/(1024.0*1024.0);
+
+        return ( mem0- mem1);
     }
     public void writeToFile(String fileName, double value) {
         try (PrintWriter pw = new PrintWriter(new FileOutputStream(fileName, true))) {

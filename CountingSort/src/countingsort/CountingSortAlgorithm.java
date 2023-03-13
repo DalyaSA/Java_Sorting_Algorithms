@@ -50,9 +50,17 @@ public class CountingSortAlgorithm {
 
         return end - start;
     }
-    public double getUsedCPU() {
-        return operatingSystemMXBean.getProcessCpuLoad();
+    public int getusedCPU(long cpuStartTime, long elapsedStartTime, int cpuCount){
+        long end = System.nanoTime();
+        long totalAvailCPUTime = cpuCount * (end-elapsedStartTime);
+        long totalUsedCPUTime = ManagementFactory.getThreadMXBean().getCurrentThreadCpuTime()-cpuStartTime;
+        //log("Total CPU Time:" + totalUsedCPUTime + " ns.");
+        //log("Total Avail CPU Time:" + totalAvailCPUTime + " ns.");
+        float per = ((float)totalUsedCPUTime*100)/(float)totalAvailCPUTime;
+        return (int)per;
+
     }
+
     public double getUsedMemory(long mem0, long mem1) {
         return (mem1 - mem0)/(1024.0*1024.0);
     }
