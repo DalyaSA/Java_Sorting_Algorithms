@@ -1,5 +1,6 @@
-package selectionsort;
+package shellsort;
 
+import com.sun.management.OperatingSystemMXBean;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -7,28 +8,26 @@ import java.io.PrintWriter;
 import java.lang.management.ManagementFactory;
 import java.util.Random;
 
-public class SelectionSortAlgorithm {
+//https://www.javatpoint.com/shell-sort
+public class ShellSortAlgorithm {
     private  Random random;
-    public void sort(int arr[])
-    {
-        int n = arr.length;
 
-        // One by one move boundary of unsorted subarray
-        for (int i = 0; i < n-1; i++)
-        {
-            // Find the minimum element in unsorted array
-            int min_idx = i;
-            for (int j = i+1; j < n; j++)
-                if (arr[j] < arr[min_idx])
-                    min_idx = j;
+    /*Function to sort array using insertion sort*/
+    public void sort(int arr[]) {
 
-            // Swap the found minimum element with the first
-            // element
-            int temp = arr[min_idx];
-            arr[min_idx] = arr[i];
-            arr[i] = temp;
+        for (int interval = arr.length/2; interval > 0; interval /= 2) {
+
+            for (int i = interval; i < arr.length; i += 1) {
+                int temp = arr[i];
+                int j;
+                for (j = i; j >= interval && arr[j - interval] > temp; j -= interval) {
+                    arr[j] = arr[j - interval];
+                }
+                arr[j] = temp;
+            }
         }
     }
+
     public void CreateRandoms(int arr[]){
         random = new Random(200);
         for (int i = 0; i < arr.length; i++) {
@@ -36,7 +35,6 @@ public class SelectionSortAlgorithm {
             arr[i] = random.nextInt(2000001) - 1000000;
         }
     }
-
     public double estimatedTotalTime(double start, double end) {
 
         return end - start;

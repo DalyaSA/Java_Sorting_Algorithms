@@ -1,5 +1,6 @@
 package quicksort;
 
+import java.lang.management.ManagementFactory;
 import java.util.Arrays;
 public class Main {
 
@@ -11,35 +12,47 @@ public class Main {
         double end;
         long mem0;
         long mem1;
-        double cpu0;
-        double cpu1;
-        double usedCPU;
+        int cpuCount;
+        long startCPUTime;
+        long startNS;
+        double cpuPercent;
 
         Runtime runtime = Runtime.getRuntime();
         QuickSortAlgorithm obj = new QuickSortAlgorithm();
         obj.CreateRandoms(arr);
         Thread.sleep(3000);
 
-        cpu0 = obj.getUsedCPU();
+        // number of available processors
+        cpuCount = ManagementFactory.getOperatingSystemMXBean().getAvailableProcessors();
+        //CPU start
+        startCPUTime = ManagementFactory.getThreadMXBean().getCurrentThreadCpuTime();
+        startNS = System.nanoTime();
+        //memory start
         mem0 = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
+        //Time start
         start = System.currentTimeMillis();
+
+        //Sort Start
         obj.sort(arr);
+
+        //Time end
         end = System.currentTimeMillis();
+        //Memory end
         mem1 = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
-        cpu1 =  obj.getUsedCPU();
-        usedCPU = cpu1 - cpu0;
+        //CPU end
+        cpuPercent = obj.calcCPU(startCPUTime, startNS, cpuCount)/100.0;
 
         System.out.println("The estimated Time: " + obj.estimatedTotalTime(start, end));
         System.out.println("memoryConsumption: " + obj.getUsedMemory(mem0, mem1));
-        System.out.println("CPUConsumption: " + usedCPU);
+        System.out.println("CPUConsumption: " + cpuPercent);
 
         obj.writeToFile("quickSortTime.csv",obj.estimatedTotalTime(start, end));
-        obj.writeToFile("quickSortCPU.csv", usedCPU);
+        obj.writeToFile("quickSortCPU.csv", cpuPercent);
         obj.writeToFile("quickSortMemory.csv",obj.getUsedMemory(mem0, mem1));
         Thread.sleep(3000);
         runtime.gc();
 
-         /*
+ /*
          //print sorted array
          System.out.println("Sorted array: " + Arrays.toString(arr));
           */

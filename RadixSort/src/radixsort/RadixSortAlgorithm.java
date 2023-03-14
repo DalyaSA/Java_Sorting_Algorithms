@@ -16,7 +16,6 @@ import java.util.stream.Collectors;
 
 public class RadixSortAlgorithm {
     private  Random random;
-    OperatingSystemMXBean operatingSystemMXBean = (OperatingSystemMXBean) ManagementFactory.getOperatingSystemMXBean();
     public void sort(int arr[]) {
 
         Map<Boolean, List<Integer>> splitArray = Arrays.stream(arr).boxed().collect(Collectors.partitioningBy(i -> i < 0));
@@ -27,7 +26,7 @@ public class RadixSortAlgorithm {
     }
 
     // The main function to that sorts arr[] using Radix Sort
-    public  int[] radixsort(int arr[])
+    public int[] radixsort(int arr[])
     {
         // Find the maximum number to know number of digits
         int max = Arrays.stream(arr).max().orElse(Integer.MAX_VALUE);
@@ -82,8 +81,13 @@ public class RadixSortAlgorithm {
 
         return end - start;
     }
-    public double getUsedCPU() {
-        return operatingSystemMXBean.getProcessCpuLoad();
+    public int calcCPU(long cpuStartTime, long elapsedStartTime, int cpuCount){
+        long end = System.nanoTime();
+        long totalAvailCPUTime = cpuCount * (end-elapsedStartTime);
+        long totalUsedCPUTime = ManagementFactory.getThreadMXBean().getCurrentThreadCpuTime()-cpuStartTime;
+        float per = ((float)totalUsedCPUTime*100)/(float)totalAvailCPUTime;
+        return (int)per;
+
     }
     public double getUsedMemory(long mem0, long mem1) {
         return (mem1 - mem0)/(1024.0*1024.0);

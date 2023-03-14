@@ -1,8 +1,7 @@
-package insertionsort;
+package shellsort;
 
 import java.lang.management.ManagementFactory;
 import java.util.Arrays;
-
 public class Main {
 
     public static void main(String args[]) throws InterruptedException {
@@ -18,7 +17,7 @@ public class Main {
         double cpuPercent;
 
         Runtime runtime = Runtime.getRuntime();
-        InsertionSortAlgorithm obj = new InsertionSortAlgorithm();
+        ShellSortAlgorithm obj = new ShellSortAlgorithm();
         obj.CreateRandoms(arr);
         Thread.sleep(3000);
 
@@ -47,13 +46,13 @@ public class Main {
         System.out.println("memoryConsumption: " + obj.getUsedMemory(mem0, mem1));
         System.out.println("CPUConsumption: " + cpuPercent);
 
-        obj.writeToFile("insertionSortTime.csv", obj.estimatedTotalTime(start, end));
-        obj.writeToFile("insertionSortCPU.csv", cpuPercent);
-        obj.writeToFile("insertionSortMemory.csv", obj.getUsedMemory(mem0, mem1));
+        obj.writeToFile("shellSortTime.csv", obj.estimatedTotalTime(start, end));
+        obj.writeToFile("shellSortCPU.csv", cpuPercent);
+        obj.writeToFile("shellSortMemory.csv", obj.getUsedMemory(mem0, mem1));
         Thread.sleep(3000);
         runtime.gc();
 
-/*
+         /*
          //print sorted array
          System.out.println("Sorted array: " + Arrays.toString(arr));
           */

@@ -15,7 +15,6 @@ import java.util.Random;
 
 public class BucketSortAlgorithm {
     private  Random random;
-    OperatingSystemMXBean operatingSystemMXBean = (OperatingSystemMXBean) ManagementFactory.getOperatingSystemMXBean();
     public static void sort(int[] arr) {
 
         int min = Arrays.stream(arr).min().orElse(0);
@@ -86,8 +85,13 @@ public class BucketSortAlgorithm {
 
         return end - start;
     }
-    public double getUsedCPU() {
-        return operatingSystemMXBean.getProcessCpuLoad();
+    public int calcCPU(long cpuStartTime, long elapsedStartTime, int cpuCount){
+        long end = System.nanoTime();
+        long totalAvailCPUTime = cpuCount * (end-elapsedStartTime);
+        long totalUsedCPUTime = ManagementFactory.getThreadMXBean().getCurrentThreadCpuTime()-cpuStartTime;
+        float per = ((float)totalUsedCPUTime*100)/(float)totalAvailCPUTime;
+        return (int)per;
+
     }
     public double getUsedMemory(long mem0, long mem1) {
         return (mem1 - mem0)/(1024.0*1024.0);

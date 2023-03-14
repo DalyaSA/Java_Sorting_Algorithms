@@ -1,6 +1,5 @@
 package insertionsort;
 
-import com.sun.management.OperatingSystemMXBean;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -9,7 +8,6 @@ import java.util.Random;
 
 public class InsertionSortAlgorithm {
     private  Random random;
-    OperatingSystemMXBean operatingSystemMXBean = (OperatingSystemMXBean) ManagementFactory.getOperatingSystemMXBean();
 
     /*Function to sort array using insertion sort*/
     public void sort(int arr[])
@@ -42,8 +40,13 @@ public class InsertionSortAlgorithm {
 
         return end - start;
     }
-    public double getUsedCPU() {
-        return operatingSystemMXBean.getProcessCpuLoad();
+    public int calcCPU(long cpuStartTime, long elapsedStartTime, int cpuCount){
+        long end = System.nanoTime();
+        long totalAvailCPUTime = cpuCount * (end-elapsedStartTime);
+        long totalUsedCPUTime = ManagementFactory.getThreadMXBean().getCurrentThreadCpuTime()-cpuStartTime;
+        float per = ((float)totalUsedCPUTime*100)/(float)totalAvailCPUTime;
+        return (int)per;
+
     }
     public double getUsedMemory(long mem0, long mem1) {
         return (mem1 - mem0)/(1024.0*1024.0);

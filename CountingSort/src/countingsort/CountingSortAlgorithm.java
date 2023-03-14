@@ -1,6 +1,5 @@
 package countingsort;
 
-import com.sun.management.OperatingSystemMXBean;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -10,7 +9,6 @@ import java.util.Random;
 
 public class CountingSortAlgorithm {
     private  Random random;
-    OperatingSystemMXBean operatingSystemMXBean = (OperatingSystemMXBean) ManagementFactory.getOperatingSystemMXBean();
     public void sort(int arr[])
     {
         // Find the maximum and minimum element from the array
@@ -50,21 +48,17 @@ public class CountingSortAlgorithm {
 
         return end - start;
     }
-    public int getusedCPU(long cpuStartTime, long elapsedStartTime, int cpuCount){
+    public int calcCPU(long cpuStartTime, long elapsedStartTime, int cpuCount){
         long end = System.nanoTime();
         long totalAvailCPUTime = cpuCount * (end-elapsedStartTime);
         long totalUsedCPUTime = ManagementFactory.getThreadMXBean().getCurrentThreadCpuTime()-cpuStartTime;
-        //log("Total CPU Time:" + totalUsedCPUTime + " ns.");
-        //log("Total Avail CPU Time:" + totalAvailCPUTime + " ns.");
         float per = ((float)totalUsedCPUTime*100)/(float)totalAvailCPUTime;
         return (int)per;
 
     }
-
     public double getUsedMemory(long mem0, long mem1) {
         return (mem1 - mem0)/(1024.0*1024.0);
     }
-
     public void writeToFile(String fileName, double value) {
         try (PrintWriter pw = new PrintWriter(new FileOutputStream(fileName, true))) {
             pw.println(value);
